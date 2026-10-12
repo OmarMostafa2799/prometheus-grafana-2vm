@@ -98,7 +98,7 @@ resource "aws_security_group" "prometheus" {
 ####worker###
 
 resource "aws_security_group" "worker" {
-  name   = "prometheus-sg"
+  name   = "worker-sg"
   description = "worker access"
   vpc_id = aws_vpc.monitoring.id
 
