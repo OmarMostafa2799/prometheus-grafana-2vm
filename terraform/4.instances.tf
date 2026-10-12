@@ -48,8 +48,7 @@ resource "aws_instance" "workers" {
   tags = {
     Name = "Worker-${count.index + 1}"
   }
-
-
+}
 
 
 
