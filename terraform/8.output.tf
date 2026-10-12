@@ -11,6 +11,6 @@ output "prometheus_private_ip" {
   value = aws_instance.prometheus.private_ip
 }
 
-output "target_private_ips" {
-  value = aws_instance.target[*].private_ip
+output "worker_private_ips" {
+  value = aws_instance.worker[*].private_ip
 }
