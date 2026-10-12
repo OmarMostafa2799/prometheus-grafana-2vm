@@ -6,12 +6,16 @@
     - name: Copy install-grafana.sh to Grafana server
       copy:
         src: install-grafana.sh
-        dest: /tmp/grafana.sh
+        dest: /tmp/install-grafana.sh
         mode: '0755'
+
+
 
     - name: Execute install-grafana.sh with sudo
       become: true
-      command: /tmp/install-grafana.sh
+      ansible.builtin.command:
+        cmd: /bin/bash /tmp/install-grafana.sh
+
 
 
 - name: Install Prometheus
@@ -21,12 +25,15 @@
     - name: Copy install-prometheus.sh to Prometheus server
       copy:
         src: install-prometheus.sh
-        dest: /tmp/prometheus.sh
+        dest: /tmp/install-prometheus.sh
         mode: '0755'
 
     - name: Execute install-prometheus.sh with sudo
       become: true
-      command: /tmp/install-prometheus.sh
+      ansible.builtin.command:
+        cmd: /bin/bash /tmp/install-prometheus.sh
+
+
 
 
 - name: set hostname
@@ -41,5 +48,5 @@
 
     - name: Execute install-grafana.sh with sudo
       become: true
-      command: /tmp/hosts.sh
-
+      ansible.builtin.command:
+        cmd: /bin/bash /tmp/hosts.sh
