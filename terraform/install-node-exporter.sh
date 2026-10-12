@@ -64,4 +64,6 @@ echo "Testing Node Exporter metrics..."
 
 curl -fsS http://localhost:9100/metrics
 
+sudo systemctl status node_exporter --no-pager
+
 echo "Node Exporter installation completed successfully."
