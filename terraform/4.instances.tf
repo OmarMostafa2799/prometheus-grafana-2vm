@@ -74,7 +74,7 @@ resource "aws_key_pair" "my-key" {
 #${aws_instance.prometheus.public_ip}
  ${aws_instance.prometheus.private_ip}
 
-[workers]
+ [workers]
  %{for worker in aws_instance.workers~}
  ${worker.private_ip}
  %{endfor~}
