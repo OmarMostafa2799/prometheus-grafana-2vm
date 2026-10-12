@@ -36,7 +36,7 @@ resource "aws_instance" "prometheus" {
 resource "aws_instance" "workers" {
   count         = 2
   ami           = "ami-0056d98d3e05cdbd9"
-  instance_type = "t3.small"
+  instance_type = "t2.small"
   subnet_id     = aws_subnet.private-subnet.id
   private_ip = count.index == 0 ? "10.20.1.13" : "10.20.1.14"
   security_groups = [aws_security_group.worker.id]
