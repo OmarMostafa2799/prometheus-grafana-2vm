@@ -4,9 +4,8 @@ set -euxo pipefail
 dnf install -y curl tar gzip jq
 
 # Create a dedicated system user
-useradd --system \
-  --no-create-home \
-  --shell /sbin/nologin prometheus
+id prometheus &>/dev/null || \
+  useradd --system --no-create-home --shell /sbin/nologin prometheus
 
 mkdir -p /etc/prometheus /var/lib/prometheus
 
