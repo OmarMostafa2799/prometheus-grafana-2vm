@@ -3,7 +3,7 @@ resource "aws_instance" "grafana" {
   ami           = "ami-0056d98d3e05cdbd9"
   instance_type = "t3.medium"
   subnet_id     = aws_subnet.public-subnet.id
-  private_ip                  = "10.20.0.1"
+  private_ip                  = "10.20.0.11"
   security_groups = [aws_security_group.grafana.id]
   availability_zone = "eu-west-1a"
   associate_public_ip_address = true
@@ -21,7 +21,7 @@ resource "aws_instance" "prometheus" {
   ami           = "ami-0056d98d3e05cdbd9"
   instance_type = "t3.medium"
   subnet_id     = aws_subnet.private-subnet.id
-  private_ip                  = "10.20.1.2"
+  private_ip                  = "10.20.10.12"
   security_groups = [aws_security_group.prometheus.id]
   availability_zone = "eu-west-1a"
   user_data = "${file("install-prometheus.sh")}"
@@ -38,7 +38,7 @@ resource "aws_instance" "workers" {
   ami           = "ami-0056d98d3e05cdbd9"
   instance_type = "t3.medium"
   subnet_id     = aws_subnet.private-subnet.id
-  private_ip = count.index == 0 ? "10.20.1.3" : "10.20.1.4"
+  private_ip = count.index == 0 ? "10.20.10.13" : "10.20.10.14"
   security_groups = [aws_security_group.worker.id]
   availability_zone = "eu-west-1a"
  #user_data = "${file("install-prometheus.sh")}"
