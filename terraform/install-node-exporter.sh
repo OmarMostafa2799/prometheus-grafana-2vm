@@ -1,7 +1,7 @@
 
 #!/bin/bash
 set -euxo pipefail
-exec > >(tee -a /var/log/monitoring-setup.log) 2>&1
+exec >> /var/log/monitoring-setup.log 2>&1
 
 dnf install -y curl tar gzip jq
 
