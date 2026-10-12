@@ -1,7 +1,6 @@
 ---
 - name: Install Grafana
   hosts: grafana
-  become: true
 
   tasks:
     - name: Copy install-grafana.sh to Grafana server
@@ -11,20 +10,36 @@
         mode: '0755'
 
     - name: Execute install-grafana.sh with sudo
+      become: true
       command: /tmp/install-grafana.sh
 
 
 - name: Install Prometheus
   hosts: prometheus
-  become: true
 
   tasks:
-    - name: Copy pro.sh to Prometheus server
+    - name: Copy install-prometheus.sh to Prometheus server
       copy:
         src: install-prometheus.sh
         dest: /tmp/prometheus.sh
         mode: '0755'
 
     - name: Execute install-prometheus.sh with sudo
+      become: true
       command: /tmp/install-prometheus.sh
+
+
+- name: set hostname
+  hosts: grafana
+
+  tasks:
+    - name: Copy hosts.sh to Grafana server
+      copy:
+        src: hosts.sh
+        dest: /tmp/hosts.sh
+        mode: '0755'
+
+    - name: Execute install-grafana.sh with sudo
+      become: true
+      command: /tmp/hosts.sh
 
