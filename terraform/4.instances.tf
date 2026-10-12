@@ -68,11 +68,17 @@ resource "aws_key_pair" "my-key" {
    content  = <<EOT
  [grafana]
  ${aws_instance.grafana.public_ip}
- ${aws_instance.grafana.private_ip}
+#${aws_instance.grafana.private_ip}
 
  [prometheus]
- ${aws_instance.prometheus.public_ip}
+#${aws_instance.prometheus.public_ip}
  ${aws_instance.prometheus.private_ip}
+
+[workers]
+ %{for worker in aws_instance.workers~}
+ ${worker.private_ip}
+ %{endfor~}
+
  EOT
  }
 
