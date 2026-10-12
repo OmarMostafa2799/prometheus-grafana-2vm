@@ -2,7 +2,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-dnf install -y wget
+sudo dnf install -y wget
 
 # Add the official Grafana RPM repository
 wget -q -O /tmp/grafana.gpg \
@@ -21,13 +21,14 @@ sslverify=1
 EOF
 
 # Install Grafana OSS
-dnf install -y grafana
+sudo dnf install -y grafana
 
 # Enable and start Grafana
-systemctl enable --now grafana-server
+sudo systemctl enable --now grafana-server
 
 # Verify service
-systemctl is-active grafana-server
+sudo systemctl is-active grafana-server
+sudo systemctl status grafana-server
 
 echo "check for running"
 echo "systemctl status grafana"
