@@ -94,7 +94,7 @@ resource "aws_security_group" "prometheus" {
             protocol    = -1
             cidr_blocks = ["0.0.0.0/0"]
         }
-
+}
 ####worker###
 
 resource "aws_security_group" "worker" {
