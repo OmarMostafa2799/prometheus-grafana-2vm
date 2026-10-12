@@ -12,5 +12,14 @@ output "prometheus_private_ip" {
 }
 
 output "worker_private_ips" {
-  value = aws_instance.worker[*].private_ip
+  value = aws_instance.workers[*].private_ip
+}
+
+
+output "instance_ids" {
+  value = {
+    grafana     = aws_instance.grafana.id
+    prometheus  = aws_instance.prometheus.id
+    targets     = aws_instance.workers[*].id
+  }
 }
