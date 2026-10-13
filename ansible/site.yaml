@@ -1,0 +1,65 @@
+---
+# Step 1: Make all scripts executable on the Ansible controller
+- name: Prepare monitoring scripts
+  hosts: grafana
+  gather_facts: false
+  tasks:
+    - name: Set execute permission on all shell scripts
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/../scripts"
+        mode: "0755"
+        recurse: true
+        state: directory
+
+    - name: Find shell scripts
+      ansible.builtin.find:
+        paths: "{{ playbook_dir }}/../scripts"
+        patterns: "*.sh"
+        file_type: file
+      register: shell_scripts
+
+    - name: Ensure all shell scripts are executable
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: "0755"
+      loop: "{{ shell_scripts.files }}"
+
+# Step 2: Configure hostnames
+- name: Configure server hostnames
+  hosts: monitoring
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+
+# Step 3: Install Grafana
+- name: Install Grafana
+  hosts: grafana
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Run Grafana installation script
+      ansible.builtin.script:
+        cmd: "{{ playbook_dir }}/../scripts/install-grafana.sh"
+
+# Step 4: Install Prometheus
+- name: Install Prometheus
+  hosts: prometheus
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Run Prometheus installation script
+      ansible.builtin.script:
+        cmd: "{{ playbook_dir }}/../scripts/install-prometheus.sh"
+
+# Step 5: Install Node Exporter on Prometheus and workers
+- name: Install Node Exporter
+  hosts: prometheus:workers
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Run Node Exporter installation script
+      ansible.builtin.script:
+        cmd: "{{ playbook_dir }}/../scripts/install-node-exporter.sh"
