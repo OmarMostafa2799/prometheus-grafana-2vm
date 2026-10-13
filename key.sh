@@ -9,5 +9,5 @@ cp ~/.ssh/id_rsa.pub terraform/key.pub
 #copy ansible to controller vm  
 #scp -r ansible/ ec2-user@10.0.2.138:/home/ec2-user/
 #scp -r scripts/ ec2-user@10.0.2.138:/home/ec2-user/
-ssh 10.0.2.138 "sudo yum install ansible -y"
-echo "end" 
+#ssh 10.0.2.138 "sudo yum install ansible -y"
+#echo "end" 
