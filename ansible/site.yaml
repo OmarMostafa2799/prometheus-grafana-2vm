@@ -56,6 +56,9 @@
     - name: Run Prometheus installation script
       ansible.builtin.script:
         cmd: "{{ playbook_dir }}/../scripts/install-prometheus.sh"
+    - name: Run Prometheus configration script
+      ansible.builtin.script:
+        cmd: "{{ playbook_dir }}/../scripts/prometheus-configration.sh"
 
 # Step 5: Install Node Exporter on Prometheus and workers
 - name: Install Node Exporter
