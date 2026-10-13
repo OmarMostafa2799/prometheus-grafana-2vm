@@ -1,4 +1,13 @@
 
+#!/bin/bash
+set -euo pipefail
+
+CONFIG="/etc/prometheus/prometheus.yml"
+
+
+
+echo "==> Writing Prometheus configuration..."
+cat > "$CONFIG" <<'EOF'
 global:
   scrape_interval: 15s
 
@@ -9,7 +18,6 @@ scrape_configs:
 
   - job_name: 'node_exporter'
     static_configs:
-
       - targets: ['localhost:9100']
         labels:
           instance: 'prometheus'
@@ -25,10 +33,18 @@ scrape_configs:
       - targets: ['10.20.1.14:9100']
         labels:
           instance: 'worker-2'
+EOF
 
+echo "==> Validating configuration..."
+/usr/local/bin/promtool check config "$CONFIG"
 
+echo "==> Restarting Prometheus..."
+systemctl restart prometheus
 
+echo "==> Prometheus service status..."
+systemctl status prometheus --no-pager
 
-sudo /usr/local/bin/promtool check config /etc/prometheus/prometheus.yml
-sudo systemctl restart prometheus
-sudo systemctl status prometheus --no-pager
+echo "==> Current scrape targets:"
+curl -s http://localhost:9090/api/v1/targets
+echo
+
