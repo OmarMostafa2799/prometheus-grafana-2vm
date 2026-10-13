@@ -1,1 +1,14 @@
 ### install grafana and prometheus 
+
+#test grafana 
+curl http://10.20.0.11:3000
+curl http://PublicIp:3000
+
+#test prometheus
+curl http://10.20.1.12:9090
+
+#test node exporter
+curl http://10.20.0.11:9100
+curl http://10.20.1.12:9100
+curl http://10.20.1.13:9100
+curl http://10.20.1.14:9100
