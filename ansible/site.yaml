@@ -26,7 +26,7 @@
 
 # Step 2: Configure hostnames
 - name: Configure server hostnames
-  hosts: monitoring
+  hosts: all
   become: true
   gather_facts: false
   tasks:
