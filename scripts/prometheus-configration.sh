@@ -44,7 +44,5 @@ systemctl restart prometheus
 echo "==> Prometheus service status..."
 systemctl status prometheus --no-pager
 
-echo "==> Current scrape targets:"
-curl -s http://localhost:9090/api/v1/targets
-echo
+
 
