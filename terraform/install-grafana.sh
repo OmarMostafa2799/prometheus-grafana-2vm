@@ -5,11 +5,12 @@ set -euo pipefail
 sudo dnf install -y wget
 
 # Add the official Grafana RPM repository
-wget -q -O /tmp/grafana.gpg \
+sudo wget -q -O /tmp/grafana.gpg \
   https://rpm.grafana.com/gpg.key
-rpm --import /tmp/grafana.gpg
 
-cat > /etc/yum.repos.d/grafana.repo <<'EOF'
+sudo rpm --import /tmp/grafana.gpg
+
+sudo tee /etc/yum.repos.d/grafana.repo <<'EOF'
 [grafana]
 name=Grafana
 baseurl=https://rpm.grafana.com
@@ -28,11 +29,9 @@ sudo systemctl enable --now grafana-server
 
 # Verify service
 sudo systemctl is-active grafana-server
-sudo systemctl status grafana-server
+#sudo systemctl status grafana-server
 
 echo "check for running"
 echo "systemctl status grafana"
 echo "curl http://localhost:3000"
 echo "http://GRAFANA_PUBLIC_IP:3000"
-
-
