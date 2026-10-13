@@ -1,7 +1,8 @@
 ---
 # Step 1: Make all scripts executable on the Ansible controller
 - name: Prepare monitoring scripts
-  hosts: grafana
+  hosts: localhost
+  connection: local
   gather_facts: false
   tasks:
     - name: Set execute permission on all shell scripts
@@ -26,7 +27,8 @@
 
 # Step 2: Configure hostnames
 - name: Configure server hostnames
-  hosts: all
+  hosts: localhost
+  connection: local
   become: true
   gather_facts: false
   tasks:
@@ -36,7 +38,8 @@
 
 # Step 3: Install Grafana
 - name: Install Grafana
-  hosts: grafana
+  hosts: localhost
+  connection: local
   become: true
   gather_facts: false
   tasks:
@@ -55,6 +58,16 @@
         cmd: "{{ playbook_dir }}/../scripts/install-prometheus.sh"
 
 # Step 5: Install Node Exporter on Prometheus and workers
+- name: Install Node Exporter
+  hosts: localhost
+  connection: local
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Run Node Exporter installation script
+      ansible.builtin.script:
+        cmd: "{{ playbook_dir }}/../scripts/install-node-exporter.sh"
+
 - name: Install Node Exporter
   hosts: prometheus:workers
   become: true
