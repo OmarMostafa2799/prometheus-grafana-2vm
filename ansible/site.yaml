@@ -33,8 +33,8 @@
   gather_facts: false
   tasks:
     - name: Set hostname
-      ansible.builtin.hostname:
-        name: "{{ inventory_hostname }}"
+      ansible.builtin.script:
+        cmd: "{{ playbook_dir }}/../scripts/hosts.sh"
 
 # Step 3: Install Grafana
 - name: Install Grafana
